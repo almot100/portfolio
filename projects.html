@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projets - Moussa Terap Ali</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        
+        body {
+            background: #0a0a0a;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+        
+        .nav-blur {
+            backdrop-filter: blur(10px);
+            background: rgba(10, 10, 10, 0.8);
+        }
+        
+        .glow-text {
+            text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+        }
+        
+        .grid-pattern {
+            background-image: 
+                linear-gradient(rgba(0, 212, 255, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 212, 255, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
+        
+        .section-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+        
+        .section-reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .project-card {
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-8px) rotateX(5deg);
+            box-shadow: 0 20px 40px rgba(0, 212, 255, 0.2);
+            border-color: rgba(0, 212, 255, 0.3);
+        }
+        
+        .filter-btn {
+            transition: all 0.3s ease;
+        }
+        
+        .filter-btn.active {
+            background: #00d4ff;
+            color: #000;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+        }
+        
+        .modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 12px;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 nav-blur">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="font-mono text-xl font-bold text-cyan-400">MTA</div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="hover:text-cyan-400 transition-colors">Accueil</a>
+                    <a href="about.html" class="hover:text-cyan-400 transition-colors">À propos</a>
+                    <a href="projects.html" class="text-cyan-400">Projets</a>
+                    <a href="contact.html" class="hover:text-cyan-400 transition-colors">Contact</a>
+                </div>
+                <button class="md:hidden text-white">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-32 pb-20 grid-pattern">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 section-reveal">
+                <h1 class="text-5xl font-bold mb-6 glow-text">Mes Projets</h1>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+                    Découvrez mes réalisations en développement logiciel, cybersécurité et systèmes embarqués
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filter Buttons -->
+    <section class="py-8">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-wrap justify-center gap-4 section-reveal">
+                <button class="filter-btn active bg-gray-800 text-white px-6 py-2 rounded-full font-medium" data-filter="all">
+                    Tous les projets
+                </button>
+                <button class="filter-btn bg-gray-800 text-white px-6 py-2 rounded-full font-medium" data-filter="cybersecurity">
+                    Cybersécurité
+                </button>
+                <button class="filter-btn bg-gray-800 text-white px-6 py-2 rounded-full font-medium" data-filter="embedded">
+                    Systèmes embarqués
+                </button>
+                <button class="filter-btn bg-gray-800 text-white px-6 py-2 rounded-full font-medium" data-filter="mobile">
+                    Applications mobiles
+                </button>
+                <button class="filter-btn bg-gray-800 text-white px-6 py-2 rounded-full font-medium" data-filter="iot">
+                    IoT
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Grid -->
+    <section class="py-20">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="projects-grid">
+                
+                <!-- Network Scanner Project -->
+                <div class="project-card bg-gray-900/50 p-6 rounded-xl section-reveal" data-category="cybersecurity" data-project="network-scanner">
+                    <div class="aspect-video bg-gray-800 rounded-lg mb-4 flex items-center justify-center overflow-hidden">
+                        <img src="https://kimi-web-img.moonshot.cn/img/www.softperfect.com/0a70e786c54c87a1134523823aa180ca6c8d8d8c.png" alt="Network Scanner" class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-cyan-400">Scanner Réseau</h3>
+                    <p class="text-gray-400 text-sm mb-4">Application desktop C# avec interface WPF pour scanner les hôtes actifs et analyser les ports ouverts sur un sous-réseau.</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="bg-gray-800 text-xs px-2 py-1 rounded">C#</span>
+                        <span class="bg-gray-800 text-xs px-2 py-1 rounded">.NET</span>
+                        <span class="bg-gray-800 text-xs px-2 py-1 rounded">WPF</span>
+                        <span class="bg-gray-800 text-xs px-2 py-1 rounded">TCP/IP</span>
+                    </div>
+                    <div class="text-sm text-gray-500">Automne 2025</div>
+                </div>
+
+                <!-- Raspberry Pi Camera Project -->
+                <div class="project-card bg-gray-900/50 p-6 rounded-xl section-reveal" data-category="embedded" data-project="rpi-camera">
+                    <div class="aspect-video bg-gray-800 rounded-lg mb-4 flex items-center justify-center overflow-hidden">
+                        <img src="https://kimi-web-img.moonshot.cn/img/www.raspberrypi.com/9201b11a7ebf12d67e70ce505b1a7cdb4714eb24.png" alt="Raspberry Pi Camera" class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-cyan-400">Caméra Intelligente</h3>
+                    <p class="text-gray-400 text-sm mb-4">Système embarqué Raspberry Pi avec TensorFlow Lite pour la détection d'objets en temps réel avec caméra Pi.</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="bg-gray-800 text-xs px-2 py-1 rounded">Python</span>
+                        <span class="bg-gray-800 text-xs px-2 py-1 rounded">Raspberry Pi</span>
+                        <span class="bg-gray-800 text-xs px-2 py-1 rounded">TensorFlow</span>
+                        <span class="bg-gray-800 text-xs px-2 py-1 rounded">CV</span>
+                    </div>
+                    <div class="text-sm text-gray-500">Été 2025</div>
+                </div>
+
+                <!-- STM32 Motor Control Project -->
+                <div class="project-card bg-gray-900/50 p-6 rounded-xl section-reveal" data-category="embedded" data-project="stm32-motor">
+                    <div class="aspect-video bg-gray-800 rounded-lg mb-4 flex items-center justify-center overflow-hidden">
+                        <img src="https://kimi-web-img.moonshot.cn/img/stm32-base.org/b4706619362c0836cb95aa418e74ed115d287dc8.jpg" alt="STM32 Project" class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-cyan-400">Commande Moteur FreeRTOS</h3>
+                    <p class="text-gray-400 text-sm mb-4">Contrôle de moteur avec gestion multitâche optimisée sous FreeRTOS sur STM32 avec interface utilisateur.</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="bg-gray-800 text-xs px-2 py-1 rounded">C</span>
+                        <span class="bg-gray-800 text-xs px-2 py-1 rounded">STM32</span>
+                        <span class="bg-gray-800 text-xs px-2 py-1 rounded">FreeRTOS</span>
+                        <span class="bg-gray-800 text-xs px-2 py-1 rounded">RTOS</span>
+                    </div>
+                    <div class="text-sm text-gray-500">Avr - Mai 2025</div>
+                </div>
+
+                <!-- LocaGO Mobile App -->
+                <div class="project-card bg-gray-900/50 p-6 rounded-xl section-reveal" data-category="mobile" data-project="locago">
+                    <div class="aspect-video bg-gray-800 rounded-lg mb-4 flex items-center justify-center">
+                        <div class="text-4xl">📱</div>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-cyan-400">LocaGO - Location de Véhicules</h3>
+                    <p class="text-gray-400 text-sm mb-4">Application Android de location de véhicules entre particuliers avec Firebase pour le stockage et la sécurité des données.</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="bg-gray-800 text-xs px-2 py-1 rounded">Android</span>
+                        <span class="bg-gray-800 text-xs px-2 py-1 rounded">Firebase</span>
+                        <span class="bg-gray-800 text-xs px-2 py-1 rounded">Java</span>
+                        <span class="bg-gray-800 text-xs px-2 py-1 rounded">Mobile</span>
+                    </div>
+                    <div class="text-sm text-gray-500">Fév - Avr 2025</div>
+                </div>
+
+                <!-- Smart Thermostat -->
+                <div class="project-card bg-gray-900/50 p-6 rounded-xl section-reveal" data-category="iot" data-project="thermostat">
+                    <div class="aspect-video bg-gray-800 rounded-lg mb-4 flex items-center justify-center">
+                        <div class="text-4xl">🌡️</div>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-cyan-400">Thermostat Programmable</h3>
+                    <p class="text-gray-400 text-sm mb-4">Thermostat intelligent avec capteur de température et commande de relais selon seuil programmable sur Arduino.</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="bg-gray-800 text-xs px-2 py-1 rounded">Arduino</span>
+                        <span class="bg-gray-800 text-xs px-2 py-1 rounded">C++</span>
+                        <span class="bg-gray-800 text-xs px-2 py-1 rounded">IoT</span>
+                        <span class="bg-gray-800 text-xs px-2 py-1 rounded">Embedded</span>
+                    </div>
+                    <div class="text-sm text-gray-500">Été 2024</div>
+                </div>
+
+                <!-- Future Project Placeholder -->
+                <div class="project-card bg-gray-900/50 p-6 rounded-xl section-reveal flex items-center justify-center" data-category="all" data-project="future">
+                    <div class="text-center">
+                        <div class="text-4xl mb-4">🚀</div>
+                        <h3 class="text-xl font-bold mb-2 text-cyan-400">Projet en cours...</h3>
+                        <p class="text-gray-400 text-sm">De nouveaux projets passionnants sont en cours de développement.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Modal -->
+    <div id="project-modal" class="modal">
+        <div class="modal-content p-8">
+            <div class="flex justify-between items-center mb-6">
+                <h2 id="modal-title" class="text-2xl font-bold text-cyan-400"></h2>
+                <button id="close-modal" class="text-gray-400 hover:text-white text-2xl">&times;</button>
+            </div>
+            <div id="modal-body">
+                <!-- Content will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 py-8 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <div class="flex justify-center items-center space-x-2 mb-4">
+                <div class="w-8 h-8 bg-cyan-400 rounded-full flex items-center justify-center">
+                    <span class="text-black font-bold text-sm">MTA</span>
+                </div>
+                <span class="font-mono text-lg">Moussa Terap Ali</span>
+            </div>
+            <p class="text-gray-400 text-sm">
+                © 2025 Moussa Terap Ali. Tous droits réservés.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize scroll animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('revealed');
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.section-reveal').forEach(el => {
+                observer.observe(el);
+            });
+
+            // Initialize filter functionality
+            initProjectFilters();
+            
+            // Initialize modal functionality
+            initProjectModal();
+        });
+
+        function initProjectFilters() {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const projectCards = document.querySelectorAll('.project-card');
+
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Update active button
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+
+                    const filter = button.dataset.filter;
+
+                    // Filter projects
+                    projectCards.forEach(card => {
+                        if (filter === 'all' || card.dataset.category === filter) {
+                            card.style.display = 'block';
+                            setTimeout(() => {
+                                card.style.opacity = '1';
+                                card.style.transform = 'translateY(0)';
+                            }, 100);
+                        } else {
+                            card.style.opacity = '0';
+                            card.style.transform = 'translateY(20px)';
+                            setTimeout(() => {
+                                card.style.display = 'none';
+                            }, 300);
+                        }
+                    });
+                });
+            });
+        }
+
+        function initProjectModal() {
+            const modal = document.getElementById('project-modal');
+            const modalTitle = document.getElementById('modal-title');
+            const modalBody = document.getElementById('modal-body');
+            const closeModal = document.getElementById('close-modal');
+            const projectCards = document.querySelectorAll('.project-card');
+
+            // Project details data
+            const projectDetails = {
+                'network-scanner': {
+                    title: 'Scanner Réseau',
+                    content: `
+                        <div class="space-y-6">
+                            <img src="https://kimi-web-img.moonshot.cn/img/www.softperfect.com/0a70e786c54c87a1134523823aa180ca6c8d8d8c.png" alt="Network Scanner" class="w-full h-48 object-cover rounded-lg">
+                            <div>
+                                <h3 class="text-xl font-bold text-cyan-400 mb-3">Description détaillée</h3>
+                                <p class="text-gray-300 mb-4">
+                                    Cette application desktop représente mon expertise en développement C# et en réseaux informatiques. Le scanner réseau permet de découvrir et d'analyser les hôtes actifs sur un sous-réseau, offrant une interface utilisateur intuitive et des fonctionnalités avancées de sécurité réseau.
+                                </p>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-cyan-400 mb-3">Fonctionnalités principales</h3>
+                                <ul class="text-gray-300 space-y-2">
+                                    <li>• Détection des hôtes actifs via ping</li>
+                                    <li>• Analyse des ports ouverts (80, 443, 22)</li>
+                                    <li>• Affichage en temps réel des résultats</li>
+                                    <li>• Interface graphique WPF moderne</li>
+                                    <li>• Utilisation de async/await pour les opérations réseau</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-cyan-400 mb-3">Technologies utilisées</h3>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="bg-gray-800 text-white px-3 py-1 rounded-full text-sm">C#</span>
+                                    <span class="bg-gray-800 text-white px-3 py-1 rounded-full text-sm">.NET Framework</span>
+                                    <span class="bg-gray-800 text-white px-3 py-1 rounded-full text-sm">WPF</span>
+                                    <span class="bg-gray-800 text-white px-3 py-1 rounded-full text-sm">TCP/IP</span>
+                                    <span class="bg-gray-800 text-white px-3 py-1 rounded-full text-sm">Sockets</span>
+                                </div>
+                            </div>
+                        </div>
+                    `
+                },
+                'rpi-camera': {
+                    title: 'Caméra Intelligente Raspberry Pi',
+                    content: `
+                        <div class="space-y-6">
+                            <img src="https://kimi-web-img.moonshot.cn/img/www.raspberrypi.com/9201b11a7ebf12d67e70ce505b1a7cdb4714eb24.png" alt="Raspberry Pi Camera" class="w-full h-48 object-cover rounded-lg">
+                            <div>
+                                <h3 class="text-xl font-bold text-cyan-400 mb-3">Description détaillée</h3>
+                                <p class="text-gray-300 mb-4">
+                                    Projet de système embarqué combinant intelligence artificielle et hardware. La caméra intelligente détecte et identifie des objets en temps réel, démontrant mes compétences en computer vision et en optimisation pour des ressources limitées.
+                                </p>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-cyan-400 mb-3">Fonctionnalités principales</h3>
+                                <ul class="text-gray-300 space-y-2">
+                                    <li>• Détection d'objets en temps réel</li>
+                                    <li>• Modèle TensorFlow Lite optimisé</li>
+                                    <li>• Interface caméra Pi intégrée</li>
+                                    <li>• Affichage immédiat des résultats</li>
+                                    <li>• Reconnaissance d'objets simples (bouteilles, etc.)</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-cyan-400 mb-3">Technologies utilisées</h3>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="bg-gray-800 text-white px-3 py-1 rounded-full text-sm">Python</span>
+                                    <span class="bg-gray-800 text-white px-3 py-1 rounded-full text-sm">Raspberry Pi</span>
+                                    <span class="bg-gray-800 text-white px-3 py-1 rounded-full text-sm">TensorFlow Lite</span>
+                                    <span class="bg-gray-800 text-white px-3 py-1 rounded-full text-sm">OpenCV</span>
+                                    <span class="bg-gray-800 text-white px-3 py-1 rounded-full text-sm">Computer Vision</span>
+                                </div>
+                            </div>
+                        </div>
+                    `
+                },
+                'stm32-motor': {
+                    title: 'Commande Moteur FreeRTOS',
+                    content: `
+                        <div class="space-y-6">
+                            <img src="https://kimi-web-img.moonshot.cn/img/stm32-base.org/b4706619362c0836cb95aa418e74ed115d287dc8.jpg" alt="STM32 Project" class="w-full h-48 object-cover rounded-lg">
+                            <div>
+                                <h3 class="text-xl font-bold text-cyan-400 mb-3">Description détaillée</h3>
+                                <p class="text-gray-300 mb-4">
+                                    Système de contrôle moteur avancé utilisant FreeRTOS pour une gestion multitâche optimisée. Ce projet démontre ma maîtrise des systèmes temps réel et de la programmation embarquée sur microcontrôleurs ARM.
+                                </p>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-cyan-400 mb-3">Fonctionnalités principales</h3>
+                                <ul class="text-gray-300 space-y-2">
+                                    <li>• Contrôle précis du moteur RB-Pol-126</li>
+                                    <li>• Gestion de la vitesse et du sens</li>
+                                    <li>• Activation via bouton utilisateur</li>
+                                    <li>• Multitâche optimisée sous FreeRTOS</li>
+                                    <li>• Interface utilisateur intuitive</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-cyan-400 mb-3">Technologies utilisées</h3>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="bg-gray-800 text-white px-3 py-1 rounded-full text-sm">C</span>
+                                    <span class="bg-gray-800 text-white px-3 py-1 rounded-full text-sm">STM32</span>
+                                    <span class="bg-gray-800 text-white px-3 py-1 rounded-full text-sm">FreeRTOS</span>
+                                    <span class="bg-gray-800 text-white px-3 py-1 rounded-full text-sm">STM32CubeIDE</span>
+                                    <span class="bg-gray-800 text-white px-3 py-1 rounded-full text-sm">RTOS</span>
+                                </div>
+                            </div>
+                        </div>
+                    `
+                },
+                'locago': {
+                    title: 'LocaGO - Application de Location',
+                    content: `
+                        <div class="space-y-6">
+                            <div class="w-full h-48 bg-gray-800 rounded-lg flex items-center justify-center">
+                                <div class="text-6xl">📱</div>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-cyan-400 mb-3">Description détaillée</h3>
+                                <p class="text-gray-300 mb-4">
+                                    Application mobile Android innovante pour la location de véhicules entre particuliers, similaire à TURO. Ce projet showcase mes compétences en développement mobile, gestion de base de données et sécurité des applications.
+                                </p>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-cyan-400 mb-3">Fonctionnalités principales</h3>
+                                <ul class="text-gray-300 space-y-2">
+                                    <li>• Location de véhicules entre particuliers</li>
+                                    <li>• Système de réservation intégré</li>
+                                    <li>• Paiement sécurisé</li>
+                                    <li>• Évaluation des utilisateurs</li>
+                                    <li>• Messagerie intégrée</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-cyan-400 mb-3">Technologies utilisées</h3>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="bg-gray-800 text-white px-3 py-1 rounded-full text-sm">Android</span>
+                                    <span class="bg-gray-800 text-white px-3 py-1 rounded-full text-sm">Java</span>
+                                    <span class="bg-gray-800 text-white px-3 py-1 rounded-full text-sm">Firebase</span>
+                                    <span class="bg-gray-800 text-white px-3 py-1 rounded-full text-sm">Android Studio</span>
+                                    <span class="bg-gray-800 text-white px-3 py-1 rounded-full text-sm">Mobile Development</span>
+                                </div>
+                            </div>
+                        </div>
+                    `
+                },
+                'thermostat': {
+                    title: 'Thermostat Programmable',
+                    content: `
+                        <div class="space-y-6">
+                            <div class="w-full h-48 bg-gray-800 rounded-lg flex items-center justify-center">
+                                <div class="text-6xl">🌡️</div>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-cyan-400 mb-3">Description détaillée</h3>
+                                <p class="text-gray-300 mb-4">
+                                    Projet IoT de thermostat intelligent utilisant Arduino pour créer un système de contrôle de température automatique et programmable. Ce projet démontre mes compétences en électronique et en programmation embarquée.
+                                </p>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-cyan-400 mb-3">Fonctionnalités principales</h3>
+                                <ul class="text-gray-300 space-y-2">
+                                    <li>• Contrôle automatique de la température</li>
+                                    <li>• Seuils programmables par l'utilisateur</li>
+                                    <li>• Capteur de température précis</li>
+                                    <li>• Commande de relais pour activation</li>
+                                    <li>• Interface utilisateur simple</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-cyan-400 mb-3">Technologies utilisées</h3>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="bg-gray-800 text-white px-3 py-1 rounded-full text-sm">Arduino</span>
+                                    <span class="bg-gray-800 text-white px-3 py-1 rounded-full text-sm">C++</span>
+                                    <span class="bg-gray-800 text-white px-3 py-1 rounded-full text-sm">IoT</span>
+                                    <span class="bg-gray-800 text-white px-3 py-1 rounded-full text-sm">Embedded Systems</span>
+                                    <span class="bg-gray-800 text-white px-3 py-1 rounded-full text-sm">Arduino IDE</span>
+                                </div>
+                            </div>
+                        </div>
+                    `
+                }
+            };
+
+            // Add click listeners to project cards
+            projectCards.forEach(card => {
+                const projectId = card.dataset.project;
+                if (projectDetails[projectId]) {
+                    card.addEventListener('click', () => {
+                        modalTitle.textContent = projectDetails[projectId].title;
+                        modalBody.innerHTML = projectDetails[projectId].content;
+                        modal.classList.add('show');
+                    });
+                }
+            });
+
+            // Close modal functionality
+            closeModal.addEventListener('click', () => {
+                modal.classList.remove('show');
+            });
+
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.classList.remove('show');
+                }
+            });
+        }
+    </script>
+</body>
+</html>

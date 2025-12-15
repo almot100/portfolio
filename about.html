@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>À propos - Moussa Terap Ali</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/3.0.3/plotly.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        
+        body {
+            background: #0a0a0a;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+        
+        .nav-blur {
+            backdrop-filter: blur(10px);
+            background: rgba(10, 10, 10, 0.8);
+        }
+        
+        .glow-text {
+            text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+        }
+        
+        .grid-pattern {
+            background-image: 
+                linear-gradient(rgba(0, 212, 255, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 212, 255, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
+        
+        .section-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+        
+        .section-reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .timeline-item {
+            position: relative;
+            padding-left: 2rem;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.5rem;
+            width: 12px;
+            height: 12px;
+            background: #00d4ff;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+        }
+        
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            left: 5px;
+            top: 1.5rem;
+            width: 2px;
+            height: calc(100% - 1rem);
+            background: linear-gradient(to bottom, #00d4ff, transparent);
+        }
+        
+        .timeline-item:last-child::after {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 nav-blur">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="font-mono text-xl font-bold text-cyan-400">MTA</div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="hover:text-cyan-400 transition-colors">Accueil</a>
+                    <a href="about.html" class="text-cyan-400">À propos</a>
+                    <a href="projects.html" class="hover:text-cyan-400 transition-colors">Projets</a>
+                    <a href="contact.html" class="hover:text-cyan-400 transition-colors">Contact</a>
+                </div>
+                <button class="md:hidden text-white">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-32 pb-20 grid-pattern">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 section-reveal">
+                <h1 class="text-5xl font-bold mb-6 glow-text">À propos de moi</h1>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+                    Étudiant passionné en génie informatique, je combine expertise technique et créativité pour développer des solutions innovantes dans les domaines de la cybersécurité et des systèmes embarqués.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Personal Story -->
+    <section class="py-20">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="section-reveal">
+                    <img src="resources/profile-avatar.png" alt="Moussa Terap Ali" class="w-80 h-80 rounded-full mx-auto object-cover">
+                </div>
+                
+                <div class="section-reveal">
+                    <h2 class="text-3xl font-bold mb-6 text-cyan-400">Mon parcours</h2>
+                    <div class="space-y-4 text-gray-300 leading-relaxed">
+                        <p>
+                            Passionné par la technologie depuis mon plus jeune âge, j'ai choisi de poursuivre des études en génie informatique à l'Université Laval. Mon parcours est guidé par une curiosité constante pour comprendre comment les systèmes fonctionnent et comment les rendre plus efficaces et sécurisés.
+                        </p>
+                        <p>
+                            Ce qui me distingue, c'est ma capacité à aborder les défis techniques avec une perspective multidisciplinaire, combinant développement logiciel, cybersécurité et systèmes embarqués pour créer des solutions complètes et robustes.
+                        </p>
+                        <p>
+                            Je crois fermement en l'apprentissage continu et je suis toujours à la recherche de nouvelles technologies et méthodologies pour améliorer mes compétences et contribuer à des projets innovants.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Education Timeline -->
+    <section class="py-20 grid-pattern">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 section-reveal">
+                <h2 class="text-4xl font-bold mb-4 glow-text">Formation académique</h2>
+                <p class="text-gray-400 text-lg">Mon parcours éducatif et mes certifications</p>
+            </div>
+            
+            <div class="max-w-4xl mx-auto">
+                <div class="space-y-8">
+                    <div class="timeline-item section-reveal">
+                        <div class="bg-gray-900/50 p-6 rounded-xl border border-gray-800">
+                            <div class="flex justify-between items-start mb-4">
+                                <div>
+                                    <h3 class="text-xl font-bold text-cyan-400">Baccalauréat en génie informatique</h3>
+                                    <p class="text-gray-400">Université Laval, Québec</p>
+                                </div>
+                                <span class="text-sm text-gray-500 bg-gray-800 px-3 py-1 rounded-full">2022 - 2026</span>
+                            </div>
+                            <p class="text-gray-300 mb-4">
+                                Programme de génie informatique axé sur les systèmes embarqués, la cybersécurité et le développement logiciel. 110/120 crédits complétés.
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="bg-cyan-400/20 text-cyan-400 px-3 py-1 rounded-full text-sm">Systèmes embarqués</span>
+                                <span class="bg-cyan-400/20 text-cyan-400 px-3 py-1 rounded-full text-sm">Cybersécurité</span>
+                                <span class="bg-cyan-400/20 text-cyan-400 px-3 py-1 rounded-full text-sm">Développement logiciel</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item section-reveal">
+                        <div class="bg-gray-900/50 p-6 rounded-xl border border-gray-800">
+                            <div class="flex justify-between items-start mb-4">
+                                <div>
+                                    <h3 class="text-xl font-bold text-cyan-400">Formations complémentaires</h3>
+                                    <p class="text-gray-400">OpenClassrooms</p>
+                                </div>
+                                <span class="text-sm text-gray-500 bg-gray-800 px-3 py-1 rounded-full">2024 - 2025</span>
+                            </div>
+                            <p class="text-gray-300 mb-4">
+                                Cours spécialisés en développement embarqué en C et back-end .NET pour approfondir mes compétences techniques.
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="bg-cyan-400/20 text-cyan-400 px-3 py-1 rounded-full text-sm">Développement embarqué C</span>
+                                <span class="bg-cyan-400/20 text-cyan-400 px-3 py-1 rounded-full text-sm">Back-end .NET</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Visualization -->
+    <section class="py-20">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 section-reveal">
+                <h2 class="text-4xl font-bold mb-4 glow-text">Compétences techniques</h2>
+                <p class="text-gray-400 text-lg">Visualisation de mes compétences par domaine</p>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-12">
+                <div class="section-reveal">
+                    <div class="bg-gray-900/50 p-6 rounded-xl border border-gray-800">
+                        <h3 class="text-xl font-bold mb-6 text-cyan-400">Langages de programmation</h3>
+                        <div id="programming-skills" class="h-80"></div>
+                    </div>
+                </div>
+                
+                <div class="section-reveal">
+                    <div class="bg-gray-900/50 p-6 rounded-xl border border-gray-800">
+                        <h3 class="text-xl font-bold mb-6 text-cyan-400">Technologies & Frameworks</h3>
+                        <div id="tech-skills" class="h-80"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interests & Values -->
+    <section class="py-20 grid-pattern">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 section-reveal">
+                <h2 class="text-4xl font-bold mb-4 glow-text">Intérêts & Valeurs</h2>
+                <p class="text-gray-400 text-lg">Ce qui me motive et guide dans ma carrière</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-gray-900/50 p-8 rounded-xl border border-gray-800 section-reveal">
+                    <div class="text-4xl mb-4">🔒</div>
+                    <h3 class="text-xl font-bold mb-4 text-cyan-400">Cybersécurité</h3>
+                    <p class="text-gray-300">
+                        Passionné par la protection des systèmes et des données, je crois en une approche éthique de la sécurité informatique pour créer un environnement numérique plus sûr.
+                    </p>
+                </div>
+                
+                <div class="bg-gray-900/50 p-8 rounded-xl border border-gray-800 section-reveal">
+                    <div class="text-4xl mb-4">🚀</div>
+                    <h3 class="text-xl font-bold mb-4 text-cyan-400">Innovation</h3>
+                    <p class="text-gray-300">
+                        Toujours à l'affût des nouvelles technologies, j'aime explorer des solutions innovantes pour résoudre des problèmes complexes de manière créative.
+                    </p>
+                </div>
+                
+                <div class="bg-gray-900/50 p-8 rounded-xl border border-gray-800 section-reveal">
+                    <div class="text-4xl mb-4">🤝</div>
+                    <h3 class="text-xl font-bold mb-4 text-cyan-400">Collaboration</h3>
+                    <p class="text-gray-300">
+                        Je valorise le travail d'équipe et l'échange de connaissances, croyant que les meilleures solutions émergent de la collaboration et du partage.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="py-20">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <div class="bg-gray-900/50 p-12 rounded-xl border border-gray-800 section-reveal">
+                <h2 class="text-3xl font-bold mb-6 text-cyan-400">Prêt à collaborer ?</h2>
+                <p class="text-xl text-gray-300 mb-8">
+                    Si vous recherchez un développeur passionné et motivé pour vos projets, n'hésitez pas à me contacter.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="contact.html" class="bg-cyan-400 text-black px-8 py-3 rounded-lg font-semibold hover:bg-cyan-300 transition-all transform hover:scale-105">
+                        Me contacter
+                    </a>
+                    <a href="projects.html" class="border border-cyan-400 text-cyan-400 px-8 py-3 rounded-lg font-semibold hover:bg-cyan-400 hover:text-black transition-all">
+                        Voir mes projets
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 py-8 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <div class="flex justify-center items-center space-x-2 mb-4">
+                <div class="w-8 h-8 bg-cyan-400 rounded-full flex items-center justify-center">
+                    <span class="text-black font-bold text-sm">MTA</span>
+                </div>
+                <span class="font-mono text-lg">Moussa Terap Ali</span>
+            </div>
+            <p class="text-gray-400 text-sm">
+                © 2025 Moussa Terap Ali. Tous droits réservés.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize scroll animations
+        document.addEventListener('DOMContentLoaded', function() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('revealed');
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.section-reveal').forEach(el => {
+                observer.observe(el);
+            });
+
+            // Initialize skills charts
+            initSkillsCharts();
+        });
+
+        function initSkillsCharts() {
+            // Programming Skills Chart
+            const programmingData = [{
+                x: ['C/C++', 'Python', 'Java', 'JavaScript', 'C#', 'TypeScript'],
+                y: [90, 85, 80, 75, 85, 70],
+                type: 'bar',
+                marker: {
+                    color: '#00d4ff',
+                    opacity: 0.8
+                }
+            }];
+
+            const programmingLayout = {
+                title: '',
+                xaxis: { 
+                    title: '',
+                    color: '#ffffff',
+                    gridcolor: '#333333'
+                },
+                yaxis: { 
+                    title: 'Niveau de compétence (%)',
+                    color: '#ffffff',
+                    gridcolor: '#333333'
+                },
+                paper_bgcolor: 'rgba(0,0,0,0)',
+                plot_bgcolor: 'rgba(0,0,0,0)',
+                font: { color: '#ffffff' }
+            };
+
+            Plotly.newPlot('programming-skills', programmingData, programmingLayout, {responsive: true});
+
+            // Technologies Skills Chart
+            const techData = [{
+                labels: ['STM32/FreeRTOS', 'Cybersécurité', 'React/Node.js', 'Git/GitHub', 'Firebase', 'Qt'],
+                values: [85, 90, 75, 80, 70, 65],
+                type: 'pie',
+                marker: {
+                    colors: ['#00d4ff', '#0099cc', '#006699', '#003366', '#330066', '#660099']
+                }
+            }];
+
+            const techLayout = {
+                title: '',
+                paper_bgcolor: 'rgba(0,0,0,0)',
+                plot_bgcolor: 'rgba(0,0,0,0)',
+                font: { color: '#ffffff' }
+            };
+
+            Plotly.newPlot('tech-skills', techData, techLayout, {responsive: true});
+        }
+    </script>
+</body>
+</html>
